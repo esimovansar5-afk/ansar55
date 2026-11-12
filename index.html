@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{display:flex;justify-content:center;align-items:center;height:100vh;}
+        .content{width:150px;height:200px;border:1px solid #000;border-radius:10px;background:linear-gradient(90deg,#2A7B9B 0%,#57C785 50%,#EDDD53 100%);padding:5px;font-size:24px;font-weight:bold;box-shadow:28px 28px 56px #8d8d8d,-28px -28px 56px #ffffff;}
+        .p{text-align:center;color:#000000;}
+        .update{border:1px solid #000;border-radius:10px;margin-top:90px;text-align:center;color:#000000;font-size:20px;cursor:pointer;}
+        .update:hover{background:#2A7B9B;}
+        .celcia{margin-top:20px;text-align:center;color:#000000;border:1px solid #000;width:150px;}
+    </style>
+</head>
+<body>
+    <div class="container">
+    <div class="content" id="content">
+    <div class="p">Погода</div>
+    <div class="celcia" id="celcia">Temperature</div>
+    <div class="update" onclick="showWeather()">Обновить</div>
+    </div>
+    </div>
+    
+    <script>
+    const url="https://api.open-meteo.com/v1/forecast?latitude=52.94&longitude=70.20¤t_weather=true";
+    function showWeather(){
+        fetch(url).then(response=>{
+            if(!response.ok)throw new Error("Ошибка сервера");
+            return response.json();
+        }).then(data=>{
+            document.getElementById("celcia").innerHTML=data.current_weather.temperature+"°C";
+        }).catch(error=>{
+            document.getElementById("celcia").innerHTML="Ошибка при получении данных";
+            console.log(error);
+        });
+    }
+    </script>
+</body>
+</html>
